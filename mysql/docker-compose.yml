@@ -1,0 +1,20 @@
+version: '3'
+services:
+  mysql:
+    restart: always
+    image: mysql:latest
+    container_name: mysql-lable
+    volumes:
+      - ./data:/var/lib/mysql
+      - ./my.cnf:/etc/my.cnf
+      # 数据库还原目录 可将需要还原的sql文件放在这里
+      - ./init:/docker-entrypoint-initdb.d
+      - ./sql:/home/sql
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=test"
+      - "TZ=Asia/Shanghai"
+    ports:
+      # 使用宿主机的3306端口映射到容器的3306端口
+      # 宿主机：容器
+      - 3306:3306
